@@ -5,7 +5,6 @@ import com.swap.savedocument.dto.SaveDocumentResource;
 import com.swap.savedocument.rest.assemblers.SaveDocAssembler;
 import com.swap.savedocument.services.commandservices.SaveDocumentCommandService;
 import com.swap.savedocument.services.queryservices.SaveDocumentQueryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +17,6 @@ import java.util.UUID;
 public class Controller {
 
     private final SaveDocumentCommandService saveDocumentCommandService;
-
     private final SaveDocumentQueryService saveDocumentQueryService;
 
     public Controller(SaveDocumentCommandService saveDocumentCommandService, SaveDocumentQueryService saveDocumentQueryService) {
