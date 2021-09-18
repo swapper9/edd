@@ -1,9 +1,13 @@
 package com.swap.savedocument.controllers;
 
+import com.swap.savedocument.domain.aggregates.Document;
 import com.swap.savedocument.dto.SaveDocumentResource;
 import com.swap.savedocument.rest.assemblers.SaveDocAssembler;
-import com.swap.savedocument.service.SaveDocumentService;
+import com.swap.savedocument.services.commandservices.SaveDocumentCommandService;
+import com.swap.savedocument.services.queryservices.SaveDocumentQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,11 +17,22 @@ import java.util.UUID;
 @RestController
 public class Controller {
 
-    @Autowired
-    private SaveDocumentService saveDocumentService;
+    private final SaveDocumentCommandService saveDocumentCommandService;
 
-    @PostMapping(value = "/saveDocument")
+    private final SaveDocumentQueryService saveDocumentQueryService;
+
+    public Controller(SaveDocumentCommandService saveDocumentCommandService, SaveDocumentQueryService saveDocumentQueryService) {
+        this.saveDocumentCommandService = saveDocumentCommandService;
+        this.saveDocumentQueryService = saveDocumentQueryService;
+    }
+
+    @PostMapping(value = "/document")
     public UUID saveDocument(@RequestBody SaveDocumentResource resource) {
-        return saveDocumentService.saveDocument(SaveDocAssembler.toSaveDocumentCommandFromDto(resource));
+        return saveDocumentCommandService.saveDocument(SaveDocAssembler.toSaveDocumentCommandFromDto(resource));
+    }
+
+    @GetMapping(value = "/document/{uuid}")
+    public Document getDocument(@PathVariable UUID uuid) {
+        return saveDocumentQueryService.findById(uuid).orElse(null);
     }
 }

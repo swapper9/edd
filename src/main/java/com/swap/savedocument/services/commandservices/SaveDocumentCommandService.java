@@ -1,4 +1,4 @@
-package com.swap.savedocument.service;
+package com.swap.savedocument.services.commandservices;
 
 import com.swap.savedocument.domain.aggregates.Document;
 import com.swap.savedocument.domain.commands.SaveDocumentCommand;
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class SaveDocumentService {
+public class SaveDocumentCommandService {
 
     private final SaveDocumentRepository saveDocumentRepository;
 
-    public SaveDocumentService(SaveDocumentRepository saveDocumentRepository) {
+    public SaveDocumentCommandService(SaveDocumentRepository saveDocumentRepository) {
         this.saveDocumentRepository = saveDocumentRepository;
     }
 
