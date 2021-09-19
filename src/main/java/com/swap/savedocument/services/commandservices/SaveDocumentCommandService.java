@@ -4,6 +4,7 @@ import com.swap.savedocument.domain.aggregates.Document;
 import com.swap.savedocument.domain.commands.SaveDocumentCommand;
 import com.swap.savedocument.repository.SaveDocumentRepository;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
@@ -16,11 +17,11 @@ public class SaveDocumentCommandService {
         this.saveDocumentRepository = saveDocumentRepository;
     }
 
-    public UUID saveDocument(SaveDocumentCommand cmd) {
+    public Mono<UUID> saveDocument(SaveDocumentCommand cmd) {
         UUID uuid = UUID.randomUUID();
         cmd.setId(uuid);
         Document document = new Document(cmd);
         saveDocumentRepository.save(document);
-        return uuid;
+        return Mono.just(uuid);
     }
 }
